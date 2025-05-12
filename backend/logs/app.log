@@ -1,0 +1,45 @@
+from openai import OpenAI
+
+client = OpenAI(api_key=openai_api_key)
+response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "你是一個專業的城市運動分析師，請根據用戶的運動類型、地點、天氣和時間提供專業的分析和建議。"},
+        {"role": "user", "content": f"""
+        請分析以下運動情況：
+        1. 運動類型：{get_sport_name(sport)}
+        2. 地點：{location}
+        3. 天氣：{weather}
+        4. 時間：{time}
+
+        請提供以下信息：
+        1. 適合的運動路線建議
+        2. 天氣相關注意事項
+        3. 安全建議
+        4. 運動強度建議
+        5. 裝備建議
+        """}
+    ]
+)
+ai_response = response.choices[0].message.content
+2025-05-12 21:47:20,311 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2025-05-12 21:47:20,311 INFO [33mPress CTRL+C to quit[0m
+2025-05-12 21:47:23,935 INFO 127.0.0.1 - - [12/May/2025 21:47:23] "GET /api/health HTTP/1.1" 200 -
+2025-05-12 21:47:24,196 INFO 127.0.0.1 - - [12/May/2025 21:47:24] "GET /api/health HTTP/1.1" 200 -
+2025-05-12 21:47:26,384 INFO 127.0.0.1 - - [12/May/2025 21:47:26] "OPTIONS /api/analyze/city HTTP/1.1" 200 -
+2025-05-12 21:47:26,695 INFO 收到 /api/analyze/city 請求
+2025-05-12 21:47:26,695 INFO 收到資料: {'sport': 'running', 'location': '台北市', 'weather': '晴天', 'time': '早晨'}
+2025-05-12 21:47:26,695 INFO 呼叫 OpenAI API...
+2025-05-12 21:47:33,963 INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-05-12 21:47:33,994 INFO OpenAI 回應: ChatCompletion(id='chatcmpl-BWNn6C5AtL6cQTp5QZHEFZ2kyu8yn', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='根據您的運動情況，以下是我的專業分析和建議：\n\n1. 適合的運動路線建議：\n   跑步是一種極具適應性的運動，您可以考慮在台北市的大安森林公園、中正紀念堂周邊或河堤等平坦寬敞的地方跑步。這些地方環境優美，適合進行跑步運動。\n\n2. 天氣相關注意事項：\n   在晴天跑步時，請務必做好防曬措施，擦上防曬霜以保護皮膚免受紫外線傷害。另外，請注意保持身體水分補充，避免中暑。\n\n3. 安全建議：\n   在運動時請注意人車分道，選擇行人專用或人車分隔的路線，保持警覺以避免意外發生。建議選擇熱門運動場所或有監視器的地點運動，以提高安全性。\n\n4. 運動強度建議：\n   早晨是一個適合運動的時間，空氣清新，適合進行輕至中等強度的跑步。您可以根據自身情況選擇運動強度，保持舒適的運動節奏，不要過度負荷。\n\n5. 裝備建議：\n   跑步時請穿著合適的運動服裝和運動鞋，以確保運動舒適並減少受傷風險。另外，建議攜帶運動手機、身份證、鑰匙、飲用水等必要物品，以應對突發情況。\n\n希望以上建議能幫助您在台北市晴天早晨進行跑步運動時有一個愉快而安全的體驗。祝您運動順利！如果您有任何其他問題或需要進一步的協助，請隨時告訴我。', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None))], created=1747057648, model='gpt-3.5-turbo-0125', object='chat.completion', service_tier='default', system_fingerprint=None, usage=CompletionUsage(completion_tokens=688, prompt_tokens=229, total_tokens=917, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 21:47:33,996 INFO 分析成功，回傳結果
+2025-05-12 21:47:33,998 INFO 127.0.0.1 - - [12/May/2025 21:47:33] "POST /api/analyze/city HTTP/1.1" 200 -
+2025-05-12 21:47:49,330 INFO 127.0.0.1 - - [12/May/2025 21:47:49] "OPTIONS /api/analyze/city HTTP/1.1" 200 -
+2025-05-12 21:47:49,640 INFO 收到 /api/analyze/city 請求
+2025-05-12 21:47:49,641 INFO 收到資料: {'sport': 'running', 'location': '台北市', 'weather': '晴天', 'time': '早晨'}
+2025-05-12 21:47:49,641 INFO 呼叫 OpenAI API...
+2025-05-12 21:47:54,265 INFO HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-05-12 21:47:54,276 INFO OpenAI 回應: ChatCompletion(id='chatcmpl-BWNnSC1b1NlmysoJCBPLofpTCdoMq', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='根據您的提供的運動情況，我為您提供以下專業分析和建議：\n\n1. 適合的運動路線建議：\n   在台北市運動跑步的好地方包括大直河濱公園、中正紀念堂外圍、陽明山等，這些地方有適合慢跑和景色優美的路線，也有良好的人車分流。\n\n2. 天氣相關注意事項：\n   在晴天跑步時，請注意適時補充水分，避免中暑和脫水。建議選擇避免高溫時段運動，選擇早晨或傍晚，以免曝曬過度。\n\n3. 安全建議：\n   在運動時，請注意周圍的環境安全，選擇人流較多或有監視器的地方運動。建議將手機攜帶在身上以便緊急聯繫。\n\n4. 運動強度建議：\n   以早晨時間跑步，可以選擇進行輕度至中度有氧運動，控制心率在60%-70%之間，保持輕度出汗狀態，有利於身體健康。\n\n5. 裝備建議：\n   建議穿著透氣、吸汗的運動服裝，選擇運動鞋具備良好的緩震和支撐功能。此外，可以携帶一個運動手環監測運動數據。\n\n希望以上建議能夠幫助您在台北市的早晨晴天中享受運動的快樂和健康！', refusal=None, role='assistant', annotations=[], audio=None, function_call=None, tool_calls=None))], created=1747057670, model='gpt-3.5-turbo-0125', object='chat.completion', service_tier='default', system_fingerprint=None, usage=CompletionUsage(completion_tokens=566, prompt_tokens=229, total_tokens=795, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0), prompt_tokens_details=PromptTokensDetails(audio_tokens=0, cached_tokens=0)))
+2025-05-12 21:47:54,276 INFO 分析成功，回傳結果
+2025-05-12 21:47:54,278 INFO 127.0.0.1 - - [12/May/2025 21:47:54] "POST /api/analyze/city HTTP/1.1" 200 -

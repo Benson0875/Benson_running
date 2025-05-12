@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析洞察 - Garmin Training AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>分析洞察</h1>
+        <nav>
+            <ul>
+                <li><a href="/">首頁</a></li>
+                <li><a href="/activities">活動</a></li>
+                <li><a href="/insights">洞察</a></li>
+                <li><a href="/profile">個人資料</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="visualization">
+            <h2>視覺化圖表</h2>
+            <div class="chart-container">
+                <canvas id="performance-chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="training-load-chart"></canvas>
+            </div>
+        </section>
+        <section id="ai-response">
+            <h2>AI 回應</h2>
+            <div class="response-container">
+                <h3>訓練建議</h3>
+                <div class="response-content">
+                    {{ ai_response.formatted | safe }}
+                </div>
+            </div>
+        </section>
+        <section id="training-recommendations">
+            <h2>訓練建議</h2>
+            <ul>
+                {% for suggestion in ai_response.suggestions %}
+                <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section id="progress-tracking">
+            <h2>進度追蹤</h2>
+            <div class="progress-container">
+                <h3>目標進度</h3>
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ progress_percentage }}%;"></div>
+                </div>
+                <p>完成度：{{ progress_percentage }}%</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Garmin Training AI Assistant</p>
+    </footer>
+    <script>
+        // 初始化圖表
+        const performanceCtx = document.getElementById('performance-chart').getContext('2d');
+        const performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: {{ performance_labels | tojson }},
+                datasets: [{
+                    label: '表現趨勢',
+                    data: {{ performance_data | tojson }},
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            }
+        });
+
+        const loadCtx = document.getElementById('training-load-chart').getContext('2d');
+        const loadChart = new Chart(loadCtx, {
+            type: 'bar',
+            data: {
+                labels: {{ load_labels | tojson }},
+                datasets: [{
+                    label: '訓練負荷',
+                    data: {{ load_data | tojson }},
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgb(153, 102, 255)',
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>
+</body>
+</html> 

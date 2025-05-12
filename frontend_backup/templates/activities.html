@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動列表 - Garmin Training AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>活動列表</h1>
+        <nav>
+            <ul>
+                <li><a href="/">首頁</a></li>
+                <li><a href="/activities">活動</a></li>
+                <li><a href="/insights">洞察</a></li>
+                <li><a href="/profile">個人資料</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="filters">
+            <h2>過濾與搜尋</h2>
+            <form id="filter-form" action="/activities" method="get">
+                <div>
+                    <label for="date-start">開始日期：</label>
+                    <input type="date" id="date-start" name="date-start">
+                </div>
+                <div>
+                    <label for="date-end">結束日期：</label>
+                    <input type="date" id="date-end" name="date-end">
+                </div>
+                <div>
+                    <label for="activity-type">活動類型：</label>
+                    <select id="activity-type" name="activity-type">
+                        <option value="">全部</option>
+                        <option value="running">跑步</option>
+                        <option value="cycling">騎車</option>
+                        <option value="swimming">游泳</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="search">搜尋：</label>
+                    <input type="text" id="search" name="search" placeholder="輸入關鍵字...">
+                </div>
+                <button type="submit">套用</button>
+            </form>
+        </section>
+        <section id="activity-list">
+            <h2>活動列表</h2>
+            <ul>
+                {% for activity in activities %}
+                <li>
+                    <a href="/activities/{{ activity.id }}">
+                        <h3>{{ activity.title }}</h3>
+                        <p>日期：{{ activity.date }}</p>
+                        <p>類型：{{ activity.type }}</p>
+                        <p>距離：{{ activity.distance }} 公尺</p>
+                        <p>時長：{{ activity.duration }} 秒</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Garmin Training AI Assistant</p>
+    </footer>
+</body>
+</html> 
